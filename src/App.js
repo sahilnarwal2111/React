@@ -1,33 +1,67 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
+// import About from './components/About';
 import './App.css';
+import Navbar from './components/Navbar';
+import TextForm from './components/TextForm';
+import Alert from './components/Alert'
+import React, {useState} from 'react';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <a className="navbar-brand" href="/">TextUtils</a>
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
+  const [mode, setMode] = useState('dark'); 
+  const [alert, setAlert] = useState(null);
+  //we are making alert as a object
 
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav mr-auto">
-        <li className="nav-item active">
-          <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/">About</a>
-        </li>
-        
-      </ul>
-      <form className="form-inline my-2 my-lg-0">
-        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+  const showAlert = (message, type)=>{
+      setAlert({
+        msg: message,
+        type: type
+      })
+      // setTimeout(() => {
+      //   setAlert(null)
+      // }, 2000);
+  }
+
+  const toggleMode = ()=>{
+    if(mode === 'light'){
+      setMode('dark');
+      document.body.style.backgroundColor = '#2e3093';
+      showAlert("Dark mode has been enabled", "success")
+      document.title = 'TextUtils - Dark Mode'
+    }
+    else{
+      setMode('light');
+      document.body.style.backgroundColor = 'white';
+      showAlert("Light mode has been enabled", "success")
+      document.title = 'TextUtils - Light Mode'
+    }
+  }
+  return (     
+    <>
+    {/* <Router> */}
+    <Navbar title = "TextUtile" mode = {mode} toggleMode={toggleMode} />
+    {/* <Alert alert={alert}/> */}
+    <div className="container my-3">
+    {/* <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/">
+            <Home />
+            </Route>
+          </Switch> */}
+    {/* <About></About> */}
+          <TextForm heading="Enter the text to analyze" showAlert = {showAlert} mode = {mode} />
     </div>
-  </nav>
-    </>
+    {/* </Router> */}
+    </>   
   );
 } 
 
 export default App;
+ 
